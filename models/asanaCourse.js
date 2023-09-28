@@ -7,7 +7,8 @@ const asanaCourseSchema = new Schema({
     type: Number
   },
   group: {
-    type: String
+    type: String,
+    enum: ['Primary', 'Intermediate', 'Advanced']
   },
   poses: [{
     type: Schema.Types.ObjectId, 
