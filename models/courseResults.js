@@ -12,7 +12,8 @@ const courseResultsSchema = new Schema({
     ref: 'AsanaCourse'
   },
   completed: {
-    type: Boolean
+    type: Boolean,
+    default: false
   }
 },{
   timestamps: true,
