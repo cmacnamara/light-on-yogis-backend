@@ -4,7 +4,11 @@ const Schema = mongoose.Schema
 
 const profileSchema = new Schema({
   name: String,
-  photo: String
+  photo: String,
+  courses: [{
+    type: Schema.Types.ObjectId,
+    ref: 'AsanaCourse'
+  }]
 },{
   timestamps: true,
 })
