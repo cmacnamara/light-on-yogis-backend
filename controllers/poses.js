@@ -1,11 +1,11 @@
-import { AsanaCourse } from "../models/asanaCourse.js"
+import { Pose } from "../models/pose.js"
 import { Profile } from "../models/profile.js"
 
 async function index(req,res) {
   try {
-    const asanaCourses = await AsanaCourse.find({})
+    const poses = await Pose.find({})
       .sort({ seqNum: 'asc' })
-    res.status(200).json(asanaCourses)
+    res.status(200).json(poses)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
@@ -14,9 +14,8 @@ async function index(req,res) {
 
 async function show(req, res) {
   try {
-    const asanaCourse = await AsanaCourse.findById(req.params.asanaCourseId)
-    .populate(['poses'])
-    res.status(200).json(asanaCourse)
+    const pose = await Pose.findById(req.params.poseId)
+    res.status(200).json(pose)
 
   } catch(err) {
     console.log(err)
@@ -26,8 +25,8 @@ async function show(req, res) {
 
 async function create(req,res) {
   try {
-    const asanaCourse = await AsanaCourse.create(req.body)
-    res.status(201).json(asanaCourse)
+    const pose = await Pose.create(req.body)
+    res.status(201).json(pose)
   } catch (err) {
     console.log(err)
     res.status(500).json(err)
@@ -35,23 +34,22 @@ async function create(req,res) {
 }
 
 async function update(req,res) {
-  console.log("working?")
   try {
-    const asanaCourse = await AsanaCourse.findByIdAndUpdate(
-      req.params.asanaCourseId,
+    const pose = await Pose.findByIdAndUpdate(
+      req.params.poseId,
       req.body,
       { new: true }
-    ).populate('poses')
-    res.status(200).json(asanaCourse)
+    )
+    res.status(200).json(pose)
   } catch (err) {
     res.status(500).json(err)
   }
 }
 
-async function deleteCourse(req,res) {
+async function deletePose(req,res) {
   try {
-    const asanaCourse = AsanaCourse.findByIdAndDelete(req.params.asanaCourseId)
-    // need to delete courses from all profiles as well
+    const pose = Pose.findByIdAndDelete(req.params.poseId)
+    // need to delete courses from all courses as well
     res.status(200).json(asanaCourse)
   } catch (err) {
     console.log(err)
@@ -64,5 +62,5 @@ export {
   show,
   create,
   update,
-  deleteCourse as delete,
+  deletePose as delete,
 }

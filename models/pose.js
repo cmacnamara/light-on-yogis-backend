@@ -6,6 +6,9 @@ const poseSchema = new Schema({
   name: {
     type: String 
   },
+  seqNum : {
+    type: Number
+  },
   description: {
     type: String
   },
