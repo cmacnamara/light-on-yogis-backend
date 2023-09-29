@@ -10,9 +10,9 @@ const router = Router()
 // ========= Protected Routes ========= 
 router.use(decodeUserFromToken)
 
-
 router.get('/', checkAuth, asanaCoursesCtrl.index)  
 router.get('/:asanaCourseId', checkAuth, asanaCoursesCtrl.show)
 
+router.post('/', checkAuth, asanaCoursesCtrl.create)
 
 export { router }
