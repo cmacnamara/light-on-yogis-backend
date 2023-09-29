@@ -3,7 +3,9 @@ import { Profile } from "../models/profile.js"
 
 async function index(req,res) {
   try {
-  
+    const asanaCourses = await AsanaCourse.find({})
+      .sort({ seqNum: 'asc' })
+    res.status(200).json(asanaCourses)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
@@ -12,9 +14,9 @@ async function index(req,res) {
 
 async function show(req, res) {
   try {
-    const article = await Article.findById(req.params.articleId)
-    .populate(['comments.author'])
-    res.status(200).json(article)
+    const asanaCourse = await AsanaCourse.findById(req.params.asanaCourseId)
+    .populate(['poses'])
+    res.status(200).json(asanaCourse)
 
   } catch(err) {
     console.log(err)
@@ -32,8 +34,34 @@ async function create(req,res) {
   }
 }
 
+async function update(req,res) {
+  console.log("working?")
+  try {
+    const asanaCourse = await AsanaCourse.findByIdAndUpdate(
+      req.params.asanaCourseId,
+      req.body,
+      { new: true }
+    ).populate('poses')
+    res.status(200).json(asanaCourse)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+async function deleteCourse(req,res) {
+  try {
+    const asanaCourse = AsanaCourse.findByIdAndDelete(req.params.asanaCourseId)
+    // need to delete courses from all profiles as well
+    res.status(200).json(asanaCourse)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
 export {
   index,
   show,
-  create
+  create,
+  update,
+  deleteCourse as delete,
 }

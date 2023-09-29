@@ -15,4 +15,8 @@ router.get('/:asanaCourseId', checkAuth, asanaCoursesCtrl.show)
 
 router.post('/', checkAuth, asanaCoursesCtrl.create)
 
+router.put('/:asanaCourseId', checkAuth, asanaCoursesCtrl.update)
+
+router.delete('/:asanaCourseId', checkAuth, asanaCoursesCtrl.delete)
+
 export { router }
