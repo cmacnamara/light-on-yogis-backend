@@ -50,8 +50,15 @@ async function update(req,res) {
 
 async function deleteCourse(req,res) {
   try {
+    // Delete course from profiles
+    const profiles = await Profile.find({})
+    .populate('courses')
+    profiles.forEach(profile => {
+      profile.courses.deleteOne({ id: req.params.asanaCourseId})
+    })
+    
     const asanaCourse = AsanaCourse.findByIdAndDelete(req.params.asanaCourseId)
-    // need to delete courses from all profiles as well
+    console.log("Profiles: ", profiles);
     res.status(200).json(asanaCourse)
   } catch (err) {
     console.log(err)

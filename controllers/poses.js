@@ -49,7 +49,7 @@ async function update(req,res) {
 async function deletePose(req,res) {
   try {
     const pose = Pose.findByIdAndDelete(req.params.poseId)
-    // need to delete courses from all courses as well
+    // need to delete pose from all courses as well
     res.status(200).json(asanaCourse)
   } catch (err) {
     console.log(err)
