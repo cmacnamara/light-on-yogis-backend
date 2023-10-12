@@ -48,9 +48,9 @@ async function update(req,res) {
 
 async function deletePose(req,res) {
   try {
-    const pose = Pose.findByIdAndDelete(req.params.poseId)
+    const pose = await Pose.findByIdAndDelete(req.params.poseId)
     // need to delete pose from all courses as well
-    res.status(200).json(asanaCourse)
+    res.status(200).json(pose)
   } catch (err) {
     console.log(err)
     res.status(500).json(err)

@@ -53,11 +53,11 @@ async function deleteCourse(req,res) {
     // Delete course from profiles
     const profiles = await Profile.find({})
     .populate('courses')
-    profiles.forEach(profile => {
-      profile.courses.deleteOne({ id: req.params.asanaCourseId})
+    profiles.forEach(async function(profile) {
+      await profile.courses.deleteOne({ _id: req.params.asanaCourseId})
     })
-    
-    const asanaCourse = AsanaCourse.findByIdAndDelete(req.params.asanaCourseId)
+    await profiles.save()
+    const asanaCourse = await AsanaCourse.findByIdAndDelete(req.params.asanaCourseId)
     console.log("Profiles: ", profiles);
     res.status(200).json(asanaCourse)
   } catch (err) {
